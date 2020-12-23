@@ -1,0 +1,32 @@
+.incomplete {
+    color: red;
+}
+
+.complete {
+    color: rgb(0, 201, 0);
+}
+
+.statusbutton {
+    background-color: rgb(142, 223, 255);
+}
+
+.delete {
+    background-color: rgb(247, 98, 82);
+}
+
+.highpriority {
+    color: red;
+}
+
+.mediumpriority {
+    color: orange;
+}
+
+.lowpriority {
+    color:yellow;
+}
+
+body {
+    color:white;
+    background-color: rgb(5, 20, 39);
+}

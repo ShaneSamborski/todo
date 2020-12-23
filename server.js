@@ -10,7 +10,7 @@ const app = express();
 //declare the port we want to connect to 
 const port = 3000; 
 
-const mongoDB = 'mongodb+srv://lea_admin_willie:Dndmongodb_forlea44!@lea0-hs7rh.mongodb.net/to_do_list_db?retryWrites=true&w=majority'; 
+const mongoDB = 'mongodb://shanesamborski:machine112@cluster0-shard-00-00.mn4kh.mongodb.net:27017,cluster0-shard-00-01.mn4kh.mongodb.net:27017,cluster0-shard-00-02.mn4kh.mongodb.net:27017/ToDoListApp?ssl=true&replicaSet=atlas-732wwi-shard-0&authSource=admin&retryWrites=true&w=majority'; 
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true}, (err, client) => {
     if(err) return console.error(err);
     console.log('Connected to database'); 
@@ -29,6 +29,8 @@ app.use(
         )
     );
 
+app.use(express.json());
+app.use(express.urlencoded({ extended:false }));
 
 //opening up our server to listen on a specific ip address and port 
 //ip addresses are also known as hostnames 
@@ -51,7 +53,32 @@ app.get('/items', function(request, response){
 }); 
 
 //Add a app.post to send some data and save it 
+
+app.post('/items', function(request, response){
+    let newData = new Item(request.body); 
+    newData.save(function(error,item){
+        if(error) { console.log(error); 
+            response.sendStatus(500);     
+        }
+        console.log("Success, item added!"); 
+        response.sendStatus(200); 
+    }); 
+
+});
+
 //Add a app.put call to update some data
+
+app.delete('/items/:id', function(request, response){
+    console.log(request.params.id);
+    Item.deleteOne({ _id : request.params.id }, function (err) {
+        if (err){ console.log(err); return; }
+        response.sendStatus(204); 
+      });  
+});
+
+app.put('/items', function (request, response){
+    
+})
 //Add a app.delete call to delete some data 
 
 // /* Jeff */ 
@@ -81,24 +108,24 @@ app.get('/items', function(request, response){
 //     });
 
 // });
+/*
+ app.post('/item', function(request, response){
+     //use the request data to create a new item 
+     //and add it to my database. 
+     console.log(request); 
+     let item1 = new Item({
+         itemName     : "Do Dishes",
+         itemPriority : "High" ,
+         assignee     : "Willie",
+         completed    : false  
+     }); 
 
-// app.post('/item', function(request, response){
-//     //use the request data to create a new item 
-//     //and add it to my database. 
-//     console.log(request); 
-//     let item1 = new Item({
-//         itemName     : "Do Dishes",
-//         itemPriority : "High" ,
-//         assignee     : "Willie",
-//         completed    : false  
-//     }); 
-
-//     item1.save(function(err, item){
-//         if (err) return console.error(err);
-//         console.log(item); 
-//     }); 
-// });
-
+     item1.save(function(err, item){
+         if (err) return console.error(err);
+         console.log(item); 
+     }); 
+ });
+/*
 
 
 /* 

@@ -1,13 +1,23 @@
 <!doctype html>
 <html>
 <head>
-<title>Willie's To Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Shane's To Do List</title>
 <!-- css files -->
 </head>
-<body>
-    <ol id="mylist">
-    </ol>
-<button onclick="clickButton()">Click me for items</button>
+<body onload="generateList()">
+    <input type="text" placeholder="New item name" id="newitemname">
+    <input type="text" placeholder="New item assignee" id="newassignee">
+    <select name="priorities" id="newitempriority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+    </select>
+    <button onclick="addNewItem()">Create a new item</button>
+    <div id='todolist'>
+    </div>
+<!-- <button onclick="generateList()">Click me for items</button>
+<br> -->
 <!--load javascript files into it-->
 <script src="todo.js"></script> 
 </body>
